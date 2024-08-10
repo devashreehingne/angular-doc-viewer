@@ -1,11 +1,12 @@
+import { FileViewerModule } from './modules/file-viewer/file-viewer.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FilePreviewComponent } from './file-preview/file-preview.component';
 
 const routes: Routes = [
   {
-    path: "file",
-    component: FilePreviewComponent,
+    path: '',
+    loadChildren: () =>
+      import('./modules/file-viewer/file-viewer.module').then((m) => m.FileViewerModule),
   },
 ];
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DocumentsService } from '../services/documents.service';
 
 @Component({
   selector: 'app-file-preview',
@@ -8,6 +9,18 @@ import { Component } from '@angular/core';
 export class FilePreviewComponent {
   uploadedFiles: any[] = [];
   selectedFile: any = null;
+
+  constructor(private documentService: DocumentsService){}
+
+  ngOnInit(){
+    this.getDocumentsList();
+  }
+
+  getDocumentsList(){
+    this. documentService.getDocumentsList().subscribe((res:any)=>{
+      console.log(res);
+    })
+  }
 
   onFileSelected(event: any) {
     const files = event.target.files;

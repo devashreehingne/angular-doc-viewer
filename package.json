@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "@mindbowser_inc/ng-ineers-file-viewer": "^1.0.0",
+    "docviewhelper": "^0.0.2",
     "rxjs": "~7.8.0",
     "tailgrids": "^2.2.6",
     "tslib": "^2.3.0",
