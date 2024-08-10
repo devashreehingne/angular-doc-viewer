@@ -6,47 +6,30 @@ import { Component } from '@angular/core';
   styleUrl: './file-preview.component.scss'
 })
 export class FilePreviewComponent {
-  uploadedImages: { url: string; name: string }[] = [];
-  selectedImage: { url: string; name: string } | null = null;
+  uploadedFiles: any[] = [];
+  selectedFile: any = null;
 
-  onFileChange(event: any) {
-    if (event.target.files && event.target.files.length) {
-      for (let file of event.target.files) {
-        if (file.type.startsWith('image/')) {
-          const reader = new FileReader();
-
-          reader.onload = (e: any) => {
-            this.uploadedImages.push({ 
-              url: e.target.result, 
-              name: file.name 
-            });
-          };
-
-          reader.readAsDataURL(file);
-        }
-      }
+  onFileSelected(event: any) {
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.uploadedFiles.push({
+          name: file.name,
+          type: file.type,
+          url: e.target.result,
+        });
+      };
+      reader.readAsDataURL(file);
     }
   }
 
-  openModal(image: { url: string; name: string }) {
-    this.selectedImage = image;
+  openModal(file: any) {
+    this.selectedFile = file;
   }
 
   closeModal() {
-    this.selectedImage = null;
+    this.selectedFile = null;
   }
-  // uploadedImages: string[] = [];
-
-  // onFileChange(event: any) {
-  //   const files = event.target.files;
-  //   if (files) {
-  //     for (let i = 0; i < files.length; i++) {
-  //       const reader = new FileReader();
-  //       reader.onload = (e: any) => {
-  //         this.uploadedImages.push(e.target.result);
-  //       };
-  //       reader.readAsDataURL(files[i]);
-  //     }
-  //   }
-  // }
 }

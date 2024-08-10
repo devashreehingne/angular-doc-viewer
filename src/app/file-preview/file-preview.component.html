@@ -1,58 +1,115 @@
-<div class="container mx-auto p-4">
-  <h1 class="text-2xl font-bold mb-4">File Upload and Preview</h1>
-
-  <!-- File Upload Section -->
-  <div class="mb-4">
-    <label class="cursor-pointer">
-      <span class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-        Upload Files
-      </span>
-      <input type="file" (change)="onFileChange($event)" accept="image/*, .pdf, .xlsx, .xls, .xlsm, .xltx, .xltm, .csv, .tsv, .txt" class="hidden" multiple />
-    </label>
-  </div>
-
-  <!-- Grid layout for images with hover effects -->
-  <!-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-    <div *ngFor="let file of uploadedImages" class="relative group">
-      <img [src]="file.url" alt="Uploaded Image" class="w-full h-[200px] object-cover rounded-lg border-4 border-blue-500 shadow-md transition-opacity duration-300 group-hover:opacity-70" />
-      <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <button (click)="openModal(file)"
-                class="px-4 py-2 text-blue-500 border border-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300">
-          View
-        </button>
-      </div>
+<section class="bg-gray-200 h-full">
+  <div class="container mx-auto py-8">
+    <div class="mb-4">
+      <label class="cursor-pointer">
+        <span class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+          Upload Files
+        </span>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*, .pdf, .xlsx, .xls, .xlsm, .xltx, .xltm, .csv, .tsv, .txt" class="hidden" multiple />
+      </label>
     </div>
-  </div> -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-    <div *ngFor="let file of uploadedImages" class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
-      <!-- Image at the top of the card -->
-      <img [src]="file.url" alt="Uploaded Image" class="w-full h-[200px] object-cover rounded-t-lg" />
-      
-      <!-- Content below the image -->
-      <div class="p-4">
-        <h5 class="text-lg font-bold mb-2">{{ file.name }}</h5>
-        <p class="text-sm text-gray-600">Some description or content related to the image.</p>
-        <div class="mt-4 flex justify-between">
-          <button (click)="openModal(file)" class="text-blue-500 hover:underline">View</button>
-          <button class="text-red-500 hover:underline">Delete</button>
+  
+    <!-- ====== Cards Section Start ====== -->
+    <!-- <section class="bg-gray-200 dark:bg-gray-800 pt-8 pb-10 lg:pt-[60px] lg:pb-20">
+      <div class="flex flex-wrap -mx-4">
+        <div *ngFor="let file of uploadedFiles" class="w-full px-4 md:w-1/2 xl:w-1/3">
+          <div
+            class="mb-10 overflow-hidden duration-300 bg-white rounded-lg dark:bg-gray-700 shadow-lg hover:shadow-xl dark:shadow-gray-700 border border-gray-800 dark:border-gray-600 flex flex-col"
+          >
+            <div class="relative group">
+              <img
+                *ngIf="file.type.includes('image')"
+                [src]="file.url"
+                alt="Uploaded File"
+                class="w-full h-[200px] object-cover border border-gray-800 dark:border-gray-600 mt-4"
+              />
+              <div
+                *ngIf="!file.type.includes('image')"
+                class="w-full h-[200px] bg-gray-300 flex items-center justify-center border border-gray-800 dark:border-gray-600 mt-4"
+              >
+                <span class="text-gray-500 dark:text-gray-300">{{ file.name }}</span>
+              </div>
+              <button
+                (click)="openModal(file)"
+                class="absolute bottom-2 left-2 bg-white text-blue-500 border border-blue-500 px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                View
+              </button>
+            </div>
+            <div class="p-8 text-center sm:p-9 md:p-7 xl:p-9 flex-grow">
+              <h3>
+                <a
+                  href="javascript:void(0)"
+                  class="text-gray-900 dark:text-white hover:text-blue-500 mb-4 block text-xl font-semibold"
+                >
+                  {{ file.name }}
+                </a>
+              </h3>
+              <p class="text-base leading-relaxed text-gray-700 dark:text-gray-300 mb-7 overflow-hidden">
+                Some description or content related to the file. This is additional content to test the overflow and keep the height consistent across all cards.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+    <section class="pt-8 pb-10 lg:pt-[60px] lg:pb-20">
+      <div class="flex flex-wrap -mx-4">
+        <div *ngFor="let file of uploadedFiles" class="w-full px-4 md:w-1/2 xl:w-1/3">
+          <div
+            class="mb-10 overflow-hidden duration-300 bg-white rounded-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-transform dark:bg-gray-700 flex flex-col"
+          >
+            <div class="relative group p-4">
+             <div class="rounded-md border border-gray-200">
+              <img
+              *ngIf="file.type.includes('image')"
+              [src]="file.url"
+              alt="Uploaded File"
+              class="w-full h-[200px] object-cover"
+            />
+             </div>
+              <div
+                *ngIf="!file.type.includes('image')"
+                class="w-full h-[200px] bg-gray-300 flex items-center justify-center rounded-t-lg"
+              >
+                <span class="text-gray-500 dark:text-gray-300">{{ file.name }}</span>
+              </div>
+              <button
+                (click)="openModal(file)"
+                class="absolute bottom-6 left-6 bg-white text-blue-500 border border-blue-500 px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                View
+              </button>
+            </div>
+            <div class="p-2 text-center sm:p-9 md:p-2 xl:p-9 flex-grow">
+              <h3>
+                <p class="text-gray-900">{{ file.name }}</p>
+              </h3>
+              <p class="text-base leading-relaxed text-gray-300 dark:text-gray-300 mb-7 overflow-hidden">
+                Some description or content related to the file.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ====== Cards Section End ====== -->
+  
+    <!-- Modal for viewing the image -->
+    <div *ngIf="selectedFile" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+      <div class="relative bg-white p-4 rounded-lg max-w-4xl max-h-[90vh] w-full h-full overflow-hidden">
+        <!-- Close button -->
+        <button (click)="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- Image preview in modal -->
+        <div class="flex justify-center items-center h-full overflow-auto">
+          <img [src]="selectedFile.url" alt="Selected File" class="max-w-full max-h-full object-contain" />
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Modal for viewing the image -->
-  <div *ngIf="selectedImage" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-    <div class="relative bg-white p-4 rounded-lg max-w-4xl max-h-[90vh] w-full h-full overflow-hidden">
-      <!-- Close button -->
-      <button (click)="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <!-- Image preview in modal -->
-      <div class="flex justify-center items-center h-full overflow-auto">
-        <img [src]="selectedImage.url" alt="Selected Image" class="max-w-full max-h-full object-contain" />
-      </div>
-    </div>
-  </div>
-</div>
+  
+</section>
